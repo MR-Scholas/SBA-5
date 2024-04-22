@@ -1,14 +1,16 @@
 const express= require("express")
+const app=express()
+const port=process.env.PORT || 3000
 const bodyParser=require("body-parser")
+
+app.set('view engine','jsx')
+app.engine('jsx',require('express-react-views').createEngine())
 
 const sandwiches=require("./models/sandwiches")
 const desserts=require("./models/desserts")
 const comments=require("./models/comments")
 
 const error=require("./utilities/error")
-
-const app=express()
-const port=process.env.PORT || 3000
 
 app.use(express.static('public'))
 
@@ -62,7 +64,12 @@ app
         if(sandwich) res.json(sandwich)
         else next()
     })
-    
+app
+    .route("/api/sandwiches/:id/view")
+    .get((req,res)=>
+    {
+        res.render("Sandwiches")
+    })
 
 app
     .route("/api/desserts")
@@ -94,6 +101,13 @@ app
         })
         if(dessert) res.json(dessert)
         else next()
+    })
+
+app
+    .route("/api/desserts/:id/view")
+    .get((req,res)=>
+    {
+        res.render("Desserts")
     })
 
 app
@@ -136,6 +150,12 @@ app
         else next()
     })
 
+app
+    .route("/api/comments/:indexOfCommentsArray/view")
+    .get((req,res)=>
+    {
+        res.render("Comments")
+    })
 
 app
     .route("/")
