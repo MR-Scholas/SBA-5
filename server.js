@@ -141,7 +141,49 @@ app
     .route("/")
     .get((req,res,next)=>
     {
-        res.send("Work in progress!")
+        res.json
+        ({
+            links: 
+            [
+                {
+                    href: "/api",
+                    rel: "api",
+                    type: "GET",
+                },
+            ],
+        });
+    })
+
+app
+    .route("/api")
+    .get((req,res,next)=>
+    {
+        res.json
+        ({
+            links:
+            [
+                {
+                    href:"api/sandwiches",
+                    rel:"sandwiches",
+                    type:"GET",
+                },
+                {
+                    href:"api/desserts",
+                    rel:"desserts",
+                    type:"GET",
+                },
+                {
+                    href:"api/comments",
+                    rel:"comments",
+                    type:"GET",
+                },
+                {
+                    href:"api/comments",
+                    rel:"comments",
+                    type:"POST",
+                },
+            ]
+        })
     })
 
 app.use((req,res,next)=> 
