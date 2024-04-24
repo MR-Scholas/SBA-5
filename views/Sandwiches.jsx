@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react';
 
-function Sandwiches() {
-  return (
-    <div>Sandwiches</div>
-  )
+export default class Sandwiches extends Component
+{
+    render()
+    {
+        const sandwich=this.props.sandwich
+        return(
+            <h1>ID: {sandwich.id}, Name: {sandwich.name}, Origin: {sandwich.origin}</h1>
+        )
+    }
 }
-
-export default Sandwiches

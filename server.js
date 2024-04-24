@@ -3,6 +3,8 @@ const app=express()
 const port=process.env.PORT || 3000
 const bodyParser=require("body-parser")
 
+app.use(express.static('public'))
+
 app.set('view engine','jsx')
 app.engine('jsx',require('express-react-views').createEngine())
 
@@ -11,8 +13,6 @@ const desserts=require("./models/desserts")
 const comments=require("./models/comments")
 
 const error=require("./utilities/error")
-
-app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json({extended:true}))
@@ -64,11 +64,13 @@ app
         if(sandwich) res.json(sandwich)
         else next()
     })
-app
+    app
     .route("/api/sandwiches/:id/view")
-    .get((req,res)=>
+    .get((req,res,next)=>
     {
-        res.render("Sandwiches")
+        const sandwich=sandwiches.find((u)=>u.id==req.params.id)
+        if(sandwich) res.render("Sandwiches",{sandwich})
+        else next()
     })
 
 app
@@ -105,9 +107,11 @@ app
 
 app
     .route("/api/desserts/:id/view")
-    .get((req,res)=>
+    .get((req,res,next)=>
     {
-        res.render("Desserts")
+        const dessert=desserts.find((u)=>u.id==req.params.id)
+        if(dessert) res.render("Desserts",{dessert})
+        else next()
     })
 
 app
@@ -131,7 +135,7 @@ app
     })
 
 app
-    .route("/api/comments/indexOfCommentsArray")
+    .route("/api/comments/:indexOfCommentsArray")
     .get((req,res,next)=>
     {
         res.json(comments[req.params.indexOfCommentsArray])
@@ -154,7 +158,7 @@ app
     .route("/api/comments/:indexOfCommentsArray/view")
     .get((req,res)=>
     {
-        res.render("Comments")
+        res.render("Comments",{comment:comments[req.params.indexOfCommentsArray]})
     })
 
 app

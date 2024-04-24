@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react';
 
-function Desserts() {
-  return (
-    <div>Desserts</div>
-  )
+export default class Desserts extends Component
+{
+    render()
+    {
+        const dessert=this.props.dessert
+        return(
+            <h1>ID: {dessert.id}, Name: {dessert.name}, Featured: {dessert.featured}</h1>
+        )
+    }
 }
-
-export default Desserts

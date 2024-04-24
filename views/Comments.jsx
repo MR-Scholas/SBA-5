@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {Component} from 'react';
+//import './style.css'
 
-function Comments() {
-  return (
-    <div>Comments</div>
-  )
+export default class Comments extends Component
+{
+    render()
+    {
+        const comment=this.props.comment
+        return(
+            <h1>{comment.name} says "{comment.content}"</h1>
+        )
+    }
 }
-
-export default Comments
